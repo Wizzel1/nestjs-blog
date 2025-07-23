@@ -9,7 +9,7 @@
         {% for post in posts %}
             <article class="post-card">
                 <div class="post-image">
-                    <img src="/images/{{ post.image }}" alt="{{ post.title }}" onerror="this.style.display='none'">
+                    <img src="/images/{{ post.image or 'placeholder.webp' }}" alt="{{ post.title }}" onerror="this.style.display='none'">
                 </div>
                 <div class="post-content">
                     <h3><a href="/{{ post.id }}">{{ post.title }}</a></h3>
