@@ -7,6 +7,9 @@ import * as nunjucks from 'nunjucks';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(PostModule);
 
+  // Configure body parsing for form data
+  app.use(require('express').urlencoded({ extended: true }));
+
   // Configure static assets
   app.useStaticAssets(join(__dirname, '..', 'public'));
 
@@ -21,7 +24,11 @@ async function bootstrap() {
   });
 
   env.addFilter('date', function (timestamp, format) {
-    return new Date(timestamp).toLocaleDateString();
+    return new Date(timestamp).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
   });
 
   app.setViewEngine('njk');

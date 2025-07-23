@@ -13,4 +13,8 @@ export class PostService {
   getPostById(id: number): Promise<Post | undefined> {
     return this.postRepo.getPostById(id);
   }
+
+  createPost(post: Post): Promise<void> {
+    return this.postRepo.addNewPost(post);
+  }
 }

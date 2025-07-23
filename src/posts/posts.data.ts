@@ -16,9 +16,7 @@ export const getAllPostsData = async (): Promise<Post[]> => {
 
 export const saveNewQuotesData = async (newPosts: Post[]): Promise<void> => {
   try {
-    const posts = await getAllPostsData();
-    const updatesPosts = [...posts, newPosts];
-    const json = JSON.stringify(updatesPosts);
+    const json = JSON.stringify(newPosts, null, 2);
     await fs.writeFile(PATH, json, 'utf-8');
   } catch (error) {
     console.error(error);
