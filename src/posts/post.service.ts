@@ -7,15 +7,15 @@ import { Post as PostModel } from './post.model';
 export class PostService {
   constructor(private readonly postRepo: PostsRepository) {}
 
-  getAllPosts(): Promise<Post[]> {
+  async getAllPosts(): Promise<Post[]> {
     return this.postRepo.getAllPosts();
   }
 
-  getPostById(id: number): Promise<Post | undefined> {
+  async getPostById(id: number): Promise<Post | undefined> {
     return this.postRepo.getPostById(id);
   }
 
-  async createPost(data: any): Promise<void> {
+  async createPost(data: Post): Promise<void> {
     const existingPosts = await this.getAllPosts();
     const maxId =
       existingPosts.length > 0
