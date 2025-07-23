@@ -14,10 +14,10 @@ export const getAllPostsData = async (): Promise<Post[]> => {
   }
 };
 
-export const saveNewQuotesData = async (newPost: Post[]): Promise<void> => {
+export const saveNewQuotesData = async (newPosts: Post[]): Promise<void> => {
   try {
     const posts = await getAllPostsData();
-    const updatesPosts = [...posts, newPost];
+    const updatesPosts = [...posts, newPosts];
     const json = JSON.stringify(updatesPosts);
     await fs.writeFile(PATH, json, 'utf-8');
   } catch (error) {
