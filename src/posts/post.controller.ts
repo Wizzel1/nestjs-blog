@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Render, Res, Redirect  } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Render,
+  Res,
+} from '@nestjs/common';
 import { PostService } from '../posts/post.service';
 import { Response } from 'express';
 import { Post as PostModel } from './post.model';
@@ -14,9 +22,9 @@ export class PostController {
     return { posts };
   }
 
-  @Get("/new")
-  @Render("new")
-  async createPost() {
+  @Get('/new')
+  @Render('new')
+  createPost() {
     return {};
   }
 
@@ -31,13 +39,23 @@ export class PostController {
 
   @Post()
   async handleCreatePost(
-    @Body() body: { title: string; author: string; image?: string; teaser: string; content: string },
-    @Res() res: Response
+    @Body()
+    body: {
+      title: string;
+      author: string;
+      image?: string;
+      teaser: string;
+      content: string;
+    },
+    @Res() res: Response,
   ) {
     try {
       // Generate a new ID (simple approach - get max existing ID + 1)
       const existingPosts = await this.postService.getAllPosts();
-      const maxId = existingPosts.length > 0 ? Math.max(...existingPosts.map(p => p.id || 0)) : 0;
+      const maxId =
+        existingPosts.length > 0
+          ? Math.max(...existingPosts.map((p) => p.id || 0))
+          : 0;
       const newId = maxId + 1;
 
       // Create new post with current timestamp
@@ -48,7 +66,7 @@ export class PostController {
         Math.floor(Date.now() / 1000), // Current timestamp in seconds
         body.teaser,
         body.content,
-        newId
+        newId,
       );
 
       // Save the post

@@ -2,13 +2,14 @@ import { NestFactory } from '@nestjs/core';
 import { PostModule } from './posts/post.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
-import * as nunjucks from 'nunjucks';
+import nunjucks from 'nunjucks';
+import express from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(PostModule);
 
   // Configure body parsing for form data
-  app.use(require('express').urlencoded({ extended: true }));
+  app.use(express.urlencoded({ extended: true }));
 
   // Configure static assets
   app.useStaticAssets(join(__dirname, '..', 'public'));
@@ -18,12 +19,12 @@ async function bootstrap() {
   app.setBaseViewsDir(viewsPath);
 
   // Configure nunjucks environment
-  const env = nunjucks.configure(viewsPath, {
+  const env: nunjucks.Environment = nunjucks.configure(viewsPath, {
     autoescape: true,
-    express: app.getHttpAdapter().getInstance(),
+    express: app.getHttpAdapter().getInstance() as express.Application,
   });
 
-  env.addFilter('date', function (timestamp, format) {
+  env.addFilter('date', function (timestamp: string | number | Date) {
     return new Date(timestamp).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
