@@ -1,0 +1,26 @@
+{% extends "layout.njk" %}
+
+{% block title %}All Posts - Blog{% endblock %}
+
+{% block content %}
+    <h2>Latest Blog Posts</h2>
+    
+    <div class="posts-grid">
+        {% for post in posts %}
+            <article class="post-card">
+                <div class="post-image">
+                    <img src="/images/{{ post.image }}" alt="{{ post.title }}" onerror="this.style.display='none'">
+                </div>
+                <div class="post-content">
+                    <h3><a href="/{{ post.id }}">{{ post.title }}</a></h3>
+                    <div class="post-meta">
+                        <span class="author">By {{ post.author }}</span>
+                        <span class="date">{{ (post.createdAt * 1000) | date('F j, Y') }}</span>
+                    </div>
+                    <p class="teaser">{{ post.teaser }}</p>
+                    <a href="/{{ post.id }}" class="read-more">Read More</a>
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+{% endblock %} 
