@@ -13,7 +13,8 @@ export class PostsRepository {
 
   async getPostById(id: number): Promise<Post | undefined> {
     const posts = await this.getAllPosts();
-    const post = posts.find((post) => post.id === id);
+    const post = posts.find((post) => Number(post.id) === id);
+
     return post;
   }
 }

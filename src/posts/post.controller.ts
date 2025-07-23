@@ -12,7 +12,7 @@ export class PostController {
   }
 
   @Get('/:id')
-  getPostById(@Param('id') id: number): Promise<Post | undefined> {
-    return this.postService.getPostById(id);
+  getPostById(@Param('id') id: string): Promise<Post | undefined> {
+    return this.postService.getPostById(Number(id));
   }
 }
