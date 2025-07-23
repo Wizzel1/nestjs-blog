@@ -6,7 +6,6 @@ import {
   Post,
   Render,
   Res,
-  Redirect,
 } from '@nestjs/common';
 import { PostService } from '../posts/post.service';
 import { Response } from 'express';
@@ -25,7 +24,7 @@ export class PostController {
 
   @Get('/new')
   @Render('new')
-  async createPost() {
+  createPost() {
     return {};
   }
 
@@ -41,7 +40,7 @@ export class PostController {
   @Post()
   async handleCreatePost(
     @Body()
-    body,
+    body: PostModel,
     @Res() res: Response,
   ) {
     try {
